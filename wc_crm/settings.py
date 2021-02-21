@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'tinymce',
+
     'clients',
 ]
 
@@ -139,3 +141,37 @@ MEDIA_URL = env.str('DJANGO_MEDIA_URL')
 STATICFILES_DIRS = [
     env.str('DJANGO_STATICFILES_DIRS')
 ]
+
+
+# TinyMCE
+# https://github.com/jazzband/django-tinymce
+
+TINYMCE_PLUGINS = [
+    'advlist',
+    'autoresize',
+    'code',
+    'codesample',
+    'fullscreen',
+    'help',
+    'lists',
+    'link',
+    'preview',
+    'searchreplace',
+    'table',
+    'wordcount'
+]
+
+TINYMCE_TOOLBAR = [
+    'undo redo',
+    'bold italic underline',
+    'forecolor backcolor',
+    'alignleft aligncenter alignright alignjustify',
+    'bullist numlist',
+    'code'
+]
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': ' '.join(TINYMCE_PLUGINS),
+    'menubar': 'edit view insert format table help',
+    'toolbar': '|'.join(TINYMCE_TOOLBAR),
+}
