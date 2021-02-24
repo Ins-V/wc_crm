@@ -48,8 +48,8 @@ class Company(models.Model):
     address = models.CharField(verbose_name="адрес", max_length=200)
     created = models.DateTimeField(verbose_name="дата создания записи", auto_now_add=True)
     updated = models.DateTimeField(verbose_name="дата изменения записи", auto_now=True)
-    phones = models.ManyToManyField(Phone, verbose_name="phones")
-    emails = models.ManyToManyField(Email, verbose_name="emails")
+    phones = models.ManyToManyField(Phone, verbose_name="телефоны")
+    emails = models.ManyToManyField(Email, verbose_name="адреса электронной почты")
 
     def __str__(self):
         return self.name
