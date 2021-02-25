@@ -2,7 +2,7 @@ from random import randint
 
 import factory
 
-from clients.models import Phone, Email, Company
+from companies.models import Phone, Email, Company
 
 
 class PhoneFactory(factory.django.DjangoModelFactory):

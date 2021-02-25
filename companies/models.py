@@ -2,7 +2,7 @@ from django.db import models
 
 from tinymce.models import HTMLField
 
-from clients.validators import PhoneValidator
+from companies.validators import PhoneValidator
 
 
 class Phone(models.Model):

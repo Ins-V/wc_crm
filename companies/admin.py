@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from clients.models import Phone, Email, Company
+from companies.models import Phone, Email, Company
 
 
 @admin.register(Company)

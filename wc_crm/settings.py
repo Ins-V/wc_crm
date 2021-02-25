@@ -50,7 +50,7 @@ INSTALLED_APPS = [
 
     'tinymce',
 
-    'clients',
+    'companies',
 ]
 
 MIDDLEWARE = [

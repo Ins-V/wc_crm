@@ -1,8 +1,8 @@
 from django.db import IntegrityError
 from django.test import TestCase
 
-from clients.models import Phone, Email, Company
-from clients.tests.factories import PhoneFactory, EmailFactory, CompanyFactory
+from companies.models import Phone, Email, Company
+from companies.tests.factories import PhoneFactory, EmailFactory, CompanyFactory
 
 
 class PhoneModelTestCase(TestCase):
