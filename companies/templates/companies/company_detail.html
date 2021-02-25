@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ block.super }} - Company Detail{% endblock %}
+
+{% block content %}
+    <h1>Company Detail</h1>
+    <hr>
+    <section>
+        <header>
+            <h2>{{ company.name }}</h2>
+        </header>
+        <p>{{ company.contact_person }}</p>
+        {% autoescape off %}
+        {{ company.description }}
+        {% endautoescape %}
+        <div>
+            {{ company.created }} | {{ company.updated }}
+        </div>
+        <p>{{ company.address }}</p>
+        <div>
+            <ul>
+                {% for phone in company.phones.all %}
+                    <li>{{ phone.owner }} - {{ phone.number }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <ul>
+                {% for email in company.emails.all %}
+                    <li>{{ email.owner }} - {{ email.address }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+{% endblock %}

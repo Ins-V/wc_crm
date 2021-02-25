@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ block.super }} - Company List{% endblock %}
+
+{% block content %}
+    <h1>Company List</h1>
+    <hr>
+    {% for company in company_list %}
+        <section>
+            <header>
+                <h2><a href="{% url 'company:detail' company.pk %}">{{ company.name }}</a></h2>
+            </header>
+            <p>{{ company.contact_person }}</p>
+            {% autoescape off %}
+            {{ company.description }}
+            {% endautoescape %}
+            <div>
+                {{ company.created }} | {{ company.updated }}
+            </div>
+            <p>{{ company.address }}</p>
+            <div>
+                <ul>
+                    {% for phone in company.phones.all %}
+                        <li>{{ phone.owner }} - {{ phone.number }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    {% for email in company.emails.all %}
+                        <li>{{ email.owner }} - {{ email.address }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </section>
+    {% empty %}
+        <p>Список клиентов пуст.</p>
+    {% endfor %}
+{% endblock %}
