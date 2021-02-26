@@ -46,7 +46,4 @@ class CompanyDetailViewTestCase(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'companies/company_detail.html')
-        self.assertContains(response, last_company.name)
-        self.assertContains(response, last_company.contact_person)
-        self.assertContains(response, last_company.description)
-        self.assertContains(response, last_company.address)
+        self.assertEqual(response.context['company'], last_company)
