@@ -1,39 +1,73 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ block.super }} - Company List{% endblock %}
+{% block title %}Список компаний &bull; {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1>Company List</h1>
-    <hr>
+    <h3 class="center-align">Список компаний</h3>
+
     {% for company in company_list %}
-        <section>
-            <header>
-                <h2><a href="{% url 'company:detail' company.pk %}">{{ company.name }}</a></h2>
-            </header>
-            <p>{{ company.contact_person }}</p>
-            {% autoescape off %}
-            {{ company.description }}
-            {% endautoescape %}
-            <div>
-                {{ company.created }} | {{ company.updated }}
+        <div class="card">
+            <div class="card-content">
+                <p class="card-title">
+                    <a href="{% url 'company:detail' company.pk %}">{{ company.name }}</a>
+                </p>
+
+                <div class="description-block">
+                    {% autoescape off %}
+                    {{ company.description }}
+                    {% endautoescape %}
+                </div>
+
+                <p><b>Адрес:</b> {{ company.address }}</p>
+                <p><b>Руководитель или контактное лицо:</b> {{ company.contact_person }}</p>
+
+                {% if company.phones.count or company.emails.count %}
+                    <ul class="collapsible z-depth-0">
+                        {% if company.phones.count %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <i class="material-icons light-blue-text text-darken-1">phone</i> Контактные телефоны
+                                </div>
+                                <div class="collapsible-body">
+                                    {% for phone in company.phones.all %}
+                                        <div>
+                                            <a href="tel:{{ phone.number }}">{{ phone.number }}</a> ({{ phone.owner }})
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if company.emails.count %}
+                            <li>
+                                <div class="collapsible-header">
+                                    <i class="material-icons light-blue-text text-darken-1">mail</i> Адреса электронной почты
+                                </div>
+                                <div class="collapsible-body">
+                                    {% for email in company.emails.all %}
+                                        <div>
+                                            <a href="mailto:{{ email.address }}">{{ email.address }}</a> ({{ email.owner }})
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+
+                <p><b>Дата создания записи:</b> <i>{{ company.created }}</i></p>
+                <p><b>Дата обновления записи:</b> <i>{{ company.updated }}</i></p>
             </div>
-            <p>{{ company.address }}</p>
-            <div>
-                <ul>
-                    {% for phone in company.phones.all %}
-                        <li>{{ phone.owner }} - {{ phone.number }}</li>
-                    {% endfor %}
-                </ul>
+            <div class="card-action right-align">
+                <a href="#" class="waves-effect waves-light btn">
+                    <i class="material-icons left">edit</i> Редактировать
+                </a>
             </div>
-            <div>
-                <ul>
-                    {% for email in company.emails.all %}
-                        <li>{{ email.owner }} - {{ email.address }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </section>
+        </div>
     {% empty %}
-        <p>Список клиентов пуст.</p>
+        <div class="card">
+            <div class="card-content">
+                <p>Список компаний пуст.</p>
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}

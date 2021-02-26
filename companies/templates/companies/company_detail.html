@@ -1,18 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ block.super }} - Company Detail{% endblock %}
+{% block title %}{{ company.name }} &bull; {{ block.super }}{% endblock %}
 
 {% block content %}
-    <h1>Company Detail</h1>
-    <hr>
     <section>
         <header>
-            <h2>{{ company.name }}</h2>
+            <h3 class="center-align">{{ company.name }}</h3>
         </header>
-        <p>{{ company.contact_person }}</p>
+
         {% autoescape off %}
         {{ company.description }}
         {% endautoescape %}
+        <p>{{ company.contact_person }}</p>
         <div>
             {{ company.created }} | {{ company.updated }}
         </div>
