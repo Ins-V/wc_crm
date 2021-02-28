@@ -11,7 +11,7 @@ class CompanyListViewTestCase(TestCase):
         response = self.client.get(reverse('company:list'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'companies/company_list.html')
-        self.assertContains(response, "Список клиентов пуст.")
+        self.assertContains(response, "Список компаний пуст.")
         self.assertQuerysetEqual(response.context['company_list'], [])
 
     def test_company_list_is_not_empty(self):
@@ -20,7 +20,7 @@ class CompanyListViewTestCase(TestCase):
 
         response = self.client.get(reverse('company:list'))
         self.assertEqual(response.status_code, 200)
-        self.assertNotContains(response, "Список клиентов пуст.")
+        self.assertNotContains(response, "Список компаний пуст.")
         self.assertEqual(response.context['company_list'].count(), 3)
 
 
