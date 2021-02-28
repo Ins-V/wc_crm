@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 
     'tinymce',
 
+    'accounts',
     'companies',
 ]
 
@@ -117,6 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -141,6 +144,8 @@ MEDIA_URL = env.str('DJANGO_MEDIA_URL')
 STATICFILES_DIRS = [
     env.str('DJANGO_STATICFILES_DIRS')
 ]
+
+MEDIA_ROOT = env.str('DJANGO_MEDIA_ROOT')
 
 
 # TinyMCE
