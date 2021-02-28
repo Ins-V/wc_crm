@@ -14,6 +14,12 @@
         strong { font-weight: bold; }
         .card-title a { font-weight: 500; }
         .description-block { margin-bottom: .5rem; }
+        #login-form .card-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #login-form a { margin: 0; }
     </style>
 </head>
 <body>
@@ -22,14 +28,14 @@
         <nav>
             <div class="nav-wrapper cyan darken-4">
                 <div class="container">
-                    <a href="#" class="brand-logo">{ WC_CRM }</a>
+                    <a href="{% url 'account:login' %}" class="brand-logo">{ WC_CRM }</a>
                     <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
                         <i class="material-icons">menu</i>
                     </a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="#">Link 1</a></li>
                         <li><a href="#">Link 2</a></li>
-                        <li><a href="#">Link 3</a></li>
+                        <li><a href="{% url 'account:logout' %}">Logout</a></li>
                     </ul>
                 </div>
             </div>

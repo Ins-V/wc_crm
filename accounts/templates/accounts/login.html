@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Форма входа &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col s12 center-align">
+            <h3>Форма входа</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <div class="card">
+                <form action="" method="post" id="login-form">
+                    <div class="card-content">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                    <div class="card-action">
+                        <button type="submit" class="btn waves-effect waves-light">Войти</button>
+                        <a href="{% url 'account:password_reset' %}"
+                           class="light-blue-text text-darken-1">Забыли пароль?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
