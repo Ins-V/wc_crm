@@ -1,9 +1,22 @@
 {% extends 'base_layout.html' %}
+{% load paginator %}
 
 {% block title %}Список компаний &bull; {{ block.super }}{% endblock %}
 
 {% block content %}
     <h3 class="center-align">Список компаний</h3>
+
+    <form action="" method="get">
+        <div class="input-field">
+            <select name="sort" id="id_sort">
+                <option value="name"{% if sort == 'name' %} selected{% endif %}>По названию</option>
+                <option value="-name"{% if sort == '-name' %} selected{% endif %}>По названию (в обратном порядке)</option>
+                <option value="created"{% if sort == 'created' %} selected{% endif %}>По дате создания</option>
+                <option value="-created"{% if sort == '-created' %} selected{% endif %}>По дате создания (в обратном порядке)</option>
+            </select>
+            <label for="id_sort">Сортировать:</label>
+        </div>
+    </form>
 
     {% for company in company_list %}
         <div class="card">
@@ -17,42 +30,6 @@
                     {{ company.description }}
                     {% endautoescape %}
                 </div>
-
-                <p><b>Адрес:</b> {{ company.address }}</p>
-                <p><b>Руководитель или контактное лицо:</b> {{ company.contact_person }}</p>
-
-                {% if company.phones.count or company.emails.count %}
-                    <ul class="collapsible z-depth-0">
-                        {% if company.phones.count %}
-                            <li>
-                                <div class="collapsible-header">
-                                    <i class="material-icons light-blue-text text-darken-1">phone</i> Контактные телефоны
-                                </div>
-                                <div class="collapsible-body">
-                                    {% for phone in company.phones.all %}
-                                        <div>
-                                            <a href="tel:{{ phone.number }}">{{ phone.number }}</a> ({{ phone.owner }})
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </li>
-                        {% endif %}
-                        {% if company.emails.count %}
-                            <li>
-                                <div class="collapsible-header">
-                                    <i class="material-icons light-blue-text text-darken-1">mail</i> Адреса электронной почты
-                                </div>
-                                <div class="collapsible-body">
-                                    {% for email in company.emails.all %}
-                                        <div>
-                                            <a href="mailto:{{ email.address }}">{{ email.address }}</a> ({{ email.owner }})
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                            </li>
-                        {% endif %}
-                    </ul>
-                {% endif %}
 
                 <p><b>Дата создания записи:</b> <i>{{ company.created }}</i></p>
                 <p><b>Дата обновления записи:</b> <i>{{ company.updated }}</i></p>
@@ -70,4 +47,6 @@
             </div>
         </div>
     {% endfor %}
+
+    {% pagination %}
 {% endblock %}

@@ -28,14 +28,14 @@
         <nav>
             <div class="nav-wrapper cyan darken-4">
                 <div class="container">
-                    <a href="{% url 'account:login' %}" class="brand-logo">{ WC_CRM }</a>
+                    <a href="{% url 'company:list' %}" class="brand-logo">{ WC_CRM }</a>
                     <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
                         <i class="material-icons">menu</i>
                     </a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="#">Link 1</a></li>
+                        <li><a href="{% url 'company:list' %}">Компании</a></li>
                         <li><a href="#">Link 2</a></li>
-                        <li><a href="{% url 'account:logout' %}">Logout</a></li>
+                        <li><a href="{% url 'account:logout' %}">Выйти</a></li>
                     </ul>
                 </div>
             </div>
@@ -43,9 +43,9 @@
     </div>
 
     <ul class="sidenav" id="mobile-navbar">
-        <li><a href="#">Link 1</a></li>
+        <li><a href="{% url 'company:list' %}">Компании</a></li>
         <li><a href="#">Link 2</a></li>
-        <li><a href="#">Link 3</a></li>
+        <li><a href="{% url 'account:logout' %}">Выйти</a></li>
     </ul>
 
     <div class="container">
@@ -57,6 +57,17 @@
         document.addEventListener('DOMContentLoaded', function() {
             M.Sidenav.init(document.querySelectorAll('.sidenav'));
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
+            M.FormSelect.init(document.querySelectorAll('select'));
+
+            document.querySelector('#id_sort').addEventListener('change', function () {
+                this.form.submit();
+            });
+
+            document.querySelectorAll('.disabled a, .active a').forEach(function (elem) {
+                elem.addEventListener('click', function (e) {
+                    e.preventDefault();
+                });
+            });
         });
     </script>
 </body>
