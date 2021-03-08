@@ -35,7 +35,7 @@
                 <p><b>Дата обновления записи:</b> <i>{{ company.updated }}</i></p>
             </div>
             <div class="card-action right-align">
-                <a href="#" class="waves-effect waves-light btn">
+                <a href="{% url 'company:edit' company.pk %}" class="waves-effect waves-light btn">
                     <i class="material-icons left">edit</i> Редактировать
                 </a>
             </div>

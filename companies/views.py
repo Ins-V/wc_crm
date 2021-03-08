@@ -1,6 +1,7 @@
 from django.views import generic
 
 from companies.models import Company
+from companies.forms import CompanyForm
 
 
 class CompanyListView(generic.ListView):
@@ -22,3 +23,16 @@ class CompanyListView(generic.ListView):
 class CompanyDetailView(generic.DetailView):
     """Company detail view."""
     queryset = Company.objects.prefetch_related()
+
+
+class CompanyCreateView(generic.CreateView):
+    """Company create view."""
+    model = Company
+    form_class = CompanyForm
+    template_name = 'companies/company_create.html'
+
+
+class CompanyEditView(generic.UpdateView):
+    """Company edit view."""
+    model = Company
+    form_class = CompanyForm

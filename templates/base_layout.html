@@ -20,11 +20,18 @@
             align-items: center;
         }
         #login-form a { margin: 0; }
+        .modal.bottom-sheet { max-height: 70%; }
+        .sidenav .collapsible-header { padding: 0 32px; }
     </style>
 </head>
 <body>
 
     <div class="navbar-fixed">
+        <ul id="dropdown1" class="dropdown-content">
+            <li><a href="{% url 'company:list' %}">Список компаний</a></li>
+            <li><a href="{% url 'company:create' %}">Новая компания</a></li>
+        </ul>
+
         <nav>
             <div class="nav-wrapper cyan darken-4">
                 <div class="container">
@@ -33,8 +40,11 @@
                         <i class="material-icons">menu</i>
                     </a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="{% url 'company:list' %}">Компании</a></li>
-                        <li><a href="#">Link 2</a></li>
+                        <li>
+                            <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                                Компании <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
                         <li><a href="{% url 'account:logout' %}">Выйти</a></li>
                     </ul>
                 </div>
@@ -43,9 +53,21 @@
     </div>
 
     <ul class="sidenav" id="mobile-navbar">
-        <li><a href="{% url 'company:list' %}">Компании</a></li>
-        <li><a href="#">Link 2</a></li>
-        <li><a href="{% url 'account:logout' %}">Выйти</a></li>
+        <li>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>Компании</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{% url 'company:list' %}">Список компаний</a></li>
+                            <li><a href="{% url 'company:create' %}">Новая компания</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="divider"></li>
+        <li><a href="{% url 'account:logout' %}"><i class="material-icons">exit_to_app</i>Выйти</a></li>
     </ul>
 
     <div class="container">
@@ -54,10 +76,12 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             M.Sidenav.init(document.querySelectorAll('.sidenav'));
+            M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), { constrainWidth: false });
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
             M.FormSelect.init(document.querySelectorAll('select'));
+            M.Modal.init(document.querySelectorAll('.modal'));
 
             document.querySelector('#id_sort').addEventListener('change', function () {
                 this.form.submit();

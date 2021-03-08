@@ -1,0 +1,70 @@
+{% extends 'base_layout.html' %}
+
+{% block title %}{{ company.name }} &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <header>
+            <h3 class="center-align">{% block page_header %}{{ company.name }}{% endblock %}</h3>
+        </header>
+
+        {% if form.non_field_errors %}
+            <div class="card-panel red lighten-1 white-text">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.errors %}
+                    {% for error in field.errors %}<p class="red-text">* {{ error }}</p>{% endfor %}
+                {% endif %}
+                <p>
+                    {{ field.label_tag }} {{ field }}
+                    {% if field.name == 'phones' %}
+                        <a href="#modal-phone-form" class="modal-trigger">Добавить новый номер телефона</a>
+                    {% endif %}
+                    {% if field.name == 'emails' %}
+                        <a href="#modal-email-form" class="modal-trigger">Добавить новый адрес электронной почты</a>
+                    {% endif %}
+                </p>
+            {% endfor %}
+            <div class="center-align">
+                <button type="submit" class="waves-effect waves-light btn">
+                    <i class="material-icons left">edit</i> Сохранить
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {{ form.media }}
+
+    <div id="modal-phone-form" class="modal bottom-sheet">
+        <div class="container">
+            <form action="" method="post">
+                <div class="modal-content">
+                    <h4>Добавить новый номер телефона</h4>
+                    <p>Тут будет форма для добавления телефона</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="waves-effect waves-light btn">Добавить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-email-form" class="modal bottom-sheet">
+        <div class="container">
+            <div class="modal-content">
+                <h4>Добавить новый адрес электронной почты</h4>
+                <p>Тут будет форма для добавления email</p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="waves-effect waves-light btn">Добавить</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

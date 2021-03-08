@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from tinymce.models import HTMLField
 
@@ -53,3 +54,6 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('company:detail', kwargs={'pk': self.pk})
