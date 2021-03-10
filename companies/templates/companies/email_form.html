@@ -1,12 +1,20 @@
 {% extends 'base_layout.html' %}
 
-{% block title %}{{ company.name }} &bull; {{ block.super }}{% endblock %}
+{% block title %}{{ page_header }} &bull; {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="row">
         <header>
-            <h3 class="center-align">{% block page_header %}{{ company.name }}{% endblock %}</h3>
+            <h3 class="center-align">{{ page_header }}</h3>
         </header>
+
+        {% if messages %}
+            <div class="card-panel green darken-2 white-text">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
         {% if form.non_field_errors %}
             <div class="card-panel red lighten-1 white-text">
@@ -24,14 +32,6 @@
                 {% endif %}
                 <p>
                     {{ field.label_tag }} {{ field }}
-                    {% if field.name == 'phones' %}
-                        <a href="{% url 'company:phone_add' %}"
-                           target="_blank">Добавить новый номер телефона</a>
-                    {% endif %}
-                    {% if field.name == 'emails' %}
-                        <a href="{% url 'company:email_add' %}"
-                           target="_blank">Добавить новый адрес электронной почты</a>
-                    {% endif %}
                 </p>
             {% endfor %}
             <div class="center-align">
@@ -41,6 +41,4 @@
             </div>
         </form>
     </div>
-
-    {{ form.media }}
 {% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base_layout.html' %}
+{% load paginator %}
+
+{% block title %}Список контактных email адресов компаний &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <header>
+            <h3 class="center-align">Список контактных email адресов компаний</h3>
+        </header>
+
+        <table class="highlight">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Адрес</th>
+                    <th>Владелец</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for email in email_list %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><a href="{% url 'company:email_edit' email.pk %}">{{ email.address }}</a></td>
+                        <td>{{ email.owner }}</td>
+                        <td class="right-align">
+                            <a href="{% url 'company:email_delete' email.pk %}"
+                               class="btn-floating waves-effect waves-light btn-small red darken-1">
+                                <i class="material-icons">delete</i>
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="center-align">Список контактных email адресов пуст.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% pagination %}
+    </div>
+{% endblock %}

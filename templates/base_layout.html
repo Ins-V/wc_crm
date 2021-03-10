@@ -20,7 +20,6 @@
             align-items: center;
         }
         #login-form a { margin: 0; }
-        .modal.bottom-sheet { max-height: 70%; }
         .sidenav .collapsible-header { padding: 0 32px; }
     </style>
 </head>
@@ -30,6 +29,7 @@
         <ul id="dropdown1" class="dropdown-content">
             <li><a href="{% url 'company:list' %}">Список компаний</a></li>
             <li><a href="{% url 'company:create' %}">Новая компания</a></li>
+            <li><a href="{% url 'company:contacts' %}">Контакты</a></li>
         </ul>
 
         <nav>
@@ -61,6 +61,7 @@
                         <ul>
                             <li><a href="{% url 'company:list' %}">Список компаний</a></li>
                             <li><a href="{% url 'company:create' %}">Новая компания</a></li>
+                            <li><a href="{% url 'company:contacts' %}">Контакты</a></li>
                         </ul>
                     </div>
                 </li>
