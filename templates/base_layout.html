@@ -21,15 +21,26 @@
         }
         #login-form a { margin: 0; }
         .sidenav .collapsible-header { padding: 0 32px; }
+        .avatar {
+            height: 64px;
+            display: inline-flex;
+            align-items: center;
+        }
+        .avatar img { height: 3.5rem; }
+        .avatar i { font-size: 3.5rem !important; }
     </style>
 </head>
 <body>
 
     <div class="navbar-fixed">
-        <ul id="dropdown1" class="dropdown-content">
+        <ul id="dropdown-company-menu" class="dropdown-content">
             <li><a href="{% url 'company:list' %}">Список компаний</a></li>
             <li><a href="{% url 'company:create' %}">Новая компания</a></li>
             <li><a href="{% url 'company:contacts' %}">Контакты</a></li>
+        </ul>
+
+        <ul id="dropdown-user-menu" class="dropdown-content">
+            <li><a href="{% url 'account:logout' %}">Выйти</a></li>
         </ul>
 
         <nav>
@@ -41,11 +52,21 @@
                     </a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
-                            <a class="dropdown-trigger" href="#!" data-target="dropdown1">
+                            <a class="dropdown-trigger" href="#" data-target="dropdown-company-menu">
                                 Компании <i class="material-icons right">arrow_drop_down</i>
                             </a>
                         </li>
-                        <li><a href="{% url 'account:logout' %}">Выйти</a></li>
+                        <li>
+                            <a class="dropdown-trigger avatar" href="#" data-target="dropdown-user-menu">
+                                {% if user.photo %}
+                                    <img src="{{ user.photo.url }}"
+                                         alt="{{ user.username }}"
+                                         class="circle">
+                                {% else %}
+                                    <i class="material-icons">account_circle</i>
+                                {% endif %}
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -79,7 +100,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             M.Sidenav.init(document.querySelectorAll('.sidenav'));
-            M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), { constrainWidth: false });
+            M.Dropdown.init(
+                document.querySelectorAll('.dropdown-trigger'),
+                { constrainWidth: false, coverTrigger: false }
+            );
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
             M.FormSelect.init(document.querySelectorAll('select'));
             M.Modal.init(document.querySelectorAll('.modal'));
