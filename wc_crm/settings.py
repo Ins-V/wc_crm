@@ -142,11 +142,6 @@ USE_TZ = True
 
 STATIC_URL = env.str('DJANGO_STATIC_URL')
 MEDIA_URL = env.str('DJANGO_MEDIA_URL')
-
-STATICFILES_DIRS = [
-    env.str('DJANGO_STATICFILES_DIRS')
-]
-
 MEDIA_ROOT = env.str('DJANGO_MEDIA_ROOT')
 
 
@@ -191,3 +186,12 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': 'edit view insert format table help',
     'toolbar': '|'.join(TINYMCE_TOOLBAR),
 }
+
+
+# Django Debug Toolbar
+# https://django-debug-toolbar.readthedocs.io/en/latest/
+
+if DEBUG:
+    INSTALLED_APPS += ['debug_toolbar']
+    INTERNAL_IPS = ['127.0.0.1']
+    MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']

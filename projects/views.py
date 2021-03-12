@@ -8,14 +8,14 @@ from common.mixins import SortingMixin
 
 class ProjectListView(SortingMixin, generic.ListView):
     """Project list view."""
-    model = Project
+    queryset = Project.objects.select_related()
     sorting_options = ('name', '-name', 'start_date', '-start_date', 'end_date', '-end_date')
     paginate_by = 10
 
 
 class ProjectDetailView(generic.DetailView):
     """Project detail view."""
-    model = Project
+    queryset = Project.objects.select_related()
 
 
 class ProjectCreateView(generic.CreateView):
