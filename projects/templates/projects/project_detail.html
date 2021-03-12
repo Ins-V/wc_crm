@@ -1,0 +1,48 @@
+{% extends 'base_layout.html' %}
+
+{% block title %}{{ project.name }} &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <header>
+            <h3 class="center-align">{{ project.name }}</h3>
+        </header>
+
+        <p>
+            <b>Компания:</b>
+            <a href="{% url 'company:detail' project.company.pk %}">{{ project.company.name }}</a>
+        </p>
+
+        <p><b>Цена:</b> {{ project.price|floatformat:"-2" }}$</p>
+
+        {% autoescape off %}
+        {{ project.description }}
+        {% endautoescape %}
+
+        <p><b>Срок начала:</b> {{ project.start_date }}</p>
+        <p><b>Срок окончания:</b> {{ project.end_date }}</p>
+
+        <div class="col s6">
+            <a href="{% url 'project:delete' project.pk %}"
+               class="waves-effect waves-light btn red darken-1">
+                <span class="hide-on-small-only">
+                    <i class="material-icons left">delete</i> Удалить
+                </span>
+                <span class="hide-on-med-and-up">
+                    <i class="material-icons">delete</i>
+                </span>
+            </a>
+        </div>
+        <div class="col s6 right-align">
+            <a href="{% url 'project:edit' project.pk %}"
+               class="waves-effect waves-light btn">
+                <span class="hide-on-small-only">
+                    <i class="material-icons left">edit</i> Редактировать
+                </span>
+                <span class="hide-on-med-and-up">
+                    <i class="material-icons">edit</i>
+                </span>
+            </a>
+        </div>
+    </div>
+{% endblock %}

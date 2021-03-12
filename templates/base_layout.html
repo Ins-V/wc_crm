@@ -39,6 +39,11 @@
             <li><a href="{% url 'company:contacts' %}">Контакты</a></li>
         </ul>
 
+        <ul id="dropdown-project-menu" class="dropdown-content">
+            <li><a href="{% url 'project:list' %}">Список проектов</a></li>
+            <li><a href="{% url 'project:create' %}">Новый проект</a></li>
+        </ul>
+
         <ul id="dropdown-user-menu" class="dropdown-content">
             <li><a href="{% url 'account:logout' %}">Выйти</a></li>
         </ul>
@@ -54,6 +59,11 @@
                         <li>
                             <a class="dropdown-trigger" href="#" data-target="dropdown-company-menu">
                                 Компании <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-trigger" href="#" data-target="dropdown-project-menu">
+                                Проекты <i class="material-icons right">arrow_drop_down</i>
                             </a>
                         </li>
                         <li>
@@ -89,6 +99,20 @@
             </ul>
         </li>
         <li class="divider"></li>
+        <li>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>Проекты</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{% url 'project:list' %}">Список проектов</a></li>
+                            <li><a href="{% url 'project:create' %}">Новый проект</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="divider"></li>
         <li><a href="{% url 'account:logout' %}"><i class="material-icons">exit_to_app</i>Выйти</a></li>
     </ul>
 
@@ -107,10 +131,31 @@
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
             M.FormSelect.init(document.querySelectorAll('select'));
             M.Modal.init(document.querySelectorAll('.modal'));
-
-            document.querySelector('#id_sort').addEventListener('change', function () {
-                this.form.submit();
+            M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+                format: 'dd.mm.yyyy',
+                i18n: {
+                    cancel: 'Отмена',
+                    months: [
+                        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+                    ],
+                    monthsShort: [
+                        'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+                        'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'
+                    ],
+                    weekdays: ['Воскресень', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+                    weekdaysShort: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
+                    weekdaysAbbrev: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
+                }
             });
+
+            const sortList = document.querySelector('#id_sort');
+
+            if (sortList) {
+                sortList.addEventListener('change', function () {
+                    this.form.submit();
+                });
+            }
 
             document.querySelectorAll('.disabled a, .active a').forEach(function (elem) {
                 elem.addEventListener('click', function (e) {

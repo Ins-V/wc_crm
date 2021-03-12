@@ -3,7 +3,7 @@
 {% block title %}{{ company.name }} &bull; {{ block.super }}{% endblock %}
 
 {% block content %}
-    <section>
+    <div class="row">
         <header>
             <h3 class="center-align">{{ company.name }}</h3>
         </header>
@@ -53,5 +53,5 @@
         <a href="{% url 'company:edit' company.pk %}" class="waves-effect waves-light btn">
             <i class="material-icons left">edit</i> Редактировать
         </a>
-    </section>
+    </div>
 {% endblock %}

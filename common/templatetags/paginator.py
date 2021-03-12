@@ -21,7 +21,7 @@ def page_replace(context, value):
     return query.urlencode()
 
 
-@register.inclusion_tag('companies/pagination.html', takes_context=True)
+@register.inclusion_tag('common/pagination.html', takes_context=True)
 def pagination(context):
     """Includes a pagination template."""
     return context
