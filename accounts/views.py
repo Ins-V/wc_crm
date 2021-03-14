@@ -1,13 +1,16 @@
 from django.contrib.auth import views, get_user_model
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views import generic
 
 from accounts.forms import AccountSettingsForm
+from common.decorators import login_exempt
 
 
 UserModel = get_user_model()
 
 
+@method_decorator(login_exempt, name='dispatch')
 class LoginView(views.LoginView):
     template_name = 'accounts/login.html'
 
@@ -15,6 +18,7 @@ class LoginView(views.LoginView):
         return reverse('company:list')
 
 
+@method_decorator(login_exempt, name='dispatch')
 class LogoutView(views.LogoutView):
     next_page = reverse_lazy('account:login')
 
