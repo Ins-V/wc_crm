@@ -62,3 +62,13 @@ class InteractionCreateView(generic.CreateView):
     model = Interaction
     form_class = InteractionForm
     template_name = 'interactions/interaction_create.html'
+
+
+class AccountInteractionListView(generic.ListView):
+    """List of interactions added by the current user."""
+    model = Interaction
+    ordering = ['created']
+    paginate_by = 10
+
+    def get_queryset(self):
+        return self.model.objects.filter(manager=self.request.user)

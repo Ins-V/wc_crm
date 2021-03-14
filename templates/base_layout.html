@@ -47,6 +47,9 @@
         </ul>
 
         <ul id="dropdown-user-menu" class="dropdown-content">
+            <li><a href="{% url 'account:detail' %}">Мой аккаунт</a></li>
+            <li><a href="{% url 'account:settings' %}">Настройки</a></li>
+            <li><a href="{% url 'account:password_change' %}">Изменить пароль</a></li>
             <li><a href="{% url 'account:logout' %}">Выйти</a></li>
         </ul>
 
@@ -115,6 +118,9 @@
             </ul>
         </li>
         <li class="divider"></li>
+        <li><a href="{% url 'account:detail' %}"><i class="material-icons">account_box</i>Мой аккаунт</a></li>
+        <li><a href="{% url 'account:settings' %}"><i class="material-icons">settings_applications</i>Настройки</a></li>
+        <li><a href="{% url 'account:password_change' %}"><i class="material-icons">vpn_key</i>Изменить пароль</a></li>
         <li><a href="{% url 'account:logout' %}"><i class="material-icons">exit_to_app</i>Выйти</a></li>
     </ul>
 

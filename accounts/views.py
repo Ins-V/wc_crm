@@ -1,5 +1,11 @@
-from django.contrib.auth import views
+from django.contrib.auth import views, get_user_model
 from django.urls import reverse, reverse_lazy
+from django.views import generic
+
+from accounts.forms import AccountSettingsForm
+
+
+UserModel = get_user_model()
 
 
 class LoginView(views.LoginView):
@@ -30,3 +36,31 @@ class PasswordResetConfirmView(views.PasswordResetConfirmView):
 
 class PasswordResetCompleteView(views.PasswordResetCompleteView):
     template_name = 'accounts/password_reset_complete.html'
+
+
+class PasswordChangeView(views.PasswordChangeView):
+    template_name = 'accounts/password_change_form.html'
+    success_url = reverse_lazy('account:password_change_done')
+
+
+class PasswordChangeDoneView(views.PasswordChangeDoneView):
+    template_name = 'accounts/password_change_done.html'
+
+
+class AccountDetailView(generic.DetailView):
+    """Account detail view."""
+    model = UserModel
+    template_name = 'accounts/account_detail.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class AccountSettingsView(generic.UpdateView):
+    """Account settings view."""
+    model = UserModel
+    form_class = AccountSettingsForm
+    template_name = 'accounts/account_settings.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
