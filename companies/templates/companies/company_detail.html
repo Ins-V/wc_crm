@@ -49,6 +49,11 @@
 
         <p><b>Дата создания записи:</b> <i>{{ company.created }}</i></p>
         <p><b>Дата обновления записи:</b> <i>{{ company.updated }}</i></p>
+        <p>
+            <a href="{% url 'interaction:list' %}?company={{ company.pk }}">
+                Сообщения связанные с компанией
+            </a>
+        </p>
 
         <a href="{% url 'company:edit' company.pk %}" class="waves-effect waves-light btn">
             <i class="material-icons left">edit</i> Редактировать

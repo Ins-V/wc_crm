@@ -28,6 +28,8 @@
         }
         .avatar img { height: 3.5rem; }
         .avatar i { font-size: 3.5rem !important; }
+        .evaluation { white-space: nowrap; }
+        .evaluation.widget i { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -131,6 +133,7 @@
             M.Collapsible.init(document.querySelectorAll('.collapsible'));
             M.FormSelect.init(document.querySelectorAll('select'));
             M.Modal.init(document.querySelectorAll('.modal'));
+            M.Tooltip.init(document.querySelectorAll('.tooltipped'));
             M.Datepicker.init(document.querySelectorAll('.datepicker'), {
                 format: 'dd.mm.yyyy',
                 i18n: {
@@ -160,6 +163,18 @@
             document.querySelectorAll('.disabled a, .active a').forEach(function (elem) {
                 elem.addEventListener('click', function (e) {
                     e.preventDefault();
+                });
+            });
+
+            document.querySelectorAll('.evaluation.widget').forEach(function (elem) {
+                elem.querySelectorAll('i').forEach(function (star) {
+                    star.addEventListener('mouseover', function () {
+                        this.classList.add('text-darken-4');
+                    });
+
+                    star.addEventListener('mouseout', function () {
+                        this.classList.remove('text-darken-4');
+                    });
                 });
             });
         });

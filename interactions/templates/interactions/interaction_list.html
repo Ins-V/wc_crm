@@ -1,0 +1,76 @@
+{% extends 'base_layout.html' %}
+{% load paginator evaluations %}
+
+{% block title %}
+    {% if company %}
+        Список взаимодействий c {{ company }}
+    {% elif project %}
+        Список взаимодействий по проекту {{ project }}
+    {% else %}
+        Список взаимодействий
+    {% endif %} &bull; {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <header>
+            <h4 class="center-align">
+                {% if company %}
+                    Список взаимодействий c {{ company }}
+                {% elif project %}
+                    Список взаимодействий по проекту {{ project }}
+                {% else %}
+                    Список взаимодействий
+                {% endif %}
+            </h4>
+        </header>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Компания</th>
+                <th>Проект</th>
+                <th class="center-align">Менеджер</th>
+                <th class="center-align">Дата</th>
+                <th class="center-align">Оценка</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for interaction in interaction_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ interaction.company }}</td>
+                    <td>{{ interaction.project }}</td>
+                    <td class="center-align">{{ interaction.manager }}</td>
+                    <td class="center-align">{{ interaction.created }}</td>
+                    <td class="center-align">
+                        {% evaluation_star interaction.evaluation %}
+                    </td>
+                    <td class="right-align">
+                        <a href="{% url 'interaction:detail' interaction.pk %}"
+                           class="btn-floating waves-effect waves-light btn-small tooltipped"
+                           data-position="top"
+                           data-tooltip="Подробнее">
+                            <i class="material-icons">description</i>
+                        </a>
+                        <a href="{% url 'interaction:edit' interaction.pk %}"
+                           class="btn-floating waves-effect waves-light btn-small tooltipped"
+                           data-position="top"
+                           data-tooltip="Редактировать">
+                            <i class="material-icons">edit</i>
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" class="center-align">Список взаимодействий пуст.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% pagination %}
+{% endblock %}

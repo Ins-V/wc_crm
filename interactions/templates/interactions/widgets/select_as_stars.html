@@ -1,0 +1,5 @@
+<input type="hidden" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %} value="{{ widget.value.0 }}">
+<div class="evaluation widget">
+    {% for group_name, group_choices, group_index in widget.optgroups %}{% for option in group_choices %}
+    {% include option.template_name with widget=option %}{% endfor %}{% endfor %}
+</div>
