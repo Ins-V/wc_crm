@@ -26,6 +26,24 @@
         </header>
     </div>
 
+    <ul class="collapsible z-depth-0">
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">filter_list</i>Фильтр по ключевым словам
+            </div>
+            <div class="collapsible-body">
+                <form action="" method="get">
+                    {{ keyword_filter_form }}
+                    <div class="center-align">
+                        <button type="submit" class="waves-effect waves-light btn">
+                            Применить фильтр<i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </li>
+    </ul>
+
     <table>
         <thead>
             <tr>

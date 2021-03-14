@@ -11,6 +11,19 @@ from companies.models import Company
 UserModel = settings.AUTH_USER_MODEL
 
 
+class Keyword(models.Model):
+    """Keyword model."""
+    class Meta:
+        verbose_name = "ключевое слово"
+        verbose_name_plural = "ключевые слова"
+
+    word = models.CharField(verbose_name="слово", max_length=20, unique=True)
+    slug = models.SlugField(verbose_name="слаг", max_length=20)
+
+    def __str__(self):
+        return self.word
+
+
 class Interaction(models.Model):
     """Interaction model."""
     class Meta:
@@ -40,6 +53,7 @@ class Interaction(models.Model):
     )
     created = models.DateTimeField(verbose_name="дата создания записи", auto_now_add=True)
     updated = models.DateTimeField(verbose_name="дата изменения записи", auto_now=True)
+    keywords = models.ManyToManyField(Keyword, verbose_name="ключевые слова", blank=True)
 
     def __str__(self):
         return f"Взаимодействие с компанией {self.company.name} #{self.pk}"
