@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
@@ -5,8 +6,18 @@ from companies.tests.factories import CompanyFactory, PhoneFactory, EmailFactory
 from companies.models import Company, Phone, Email
 
 
+UserModel = get_user_model()
+
+
 class CompanyListViewTestCase(TestCase):
     """Testing the company list view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_no_companies(self):
         response = self.client.get(reverse('company:list'))
         self.assertEqual(response.status_code, 200)
@@ -28,10 +39,13 @@ class CompanyDetailViewTestCase(TestCase):
     """Testing the company detail view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
         for _ in range(3):
             CompanyFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.company_list = Company.objects.all()
 
     def test_company_not_found(self):
@@ -51,6 +65,13 @@ class CompanyDetailViewTestCase(TestCase):
 
 class CompanyCreateViewTestCase(TestCase):
     """Testing the company create view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_company_create_page(self):
         response = self.client.get(reverse('company:create'))
         self.assertEqual(response.status_code, 200)
@@ -72,9 +93,11 @@ class CompanyEditViewTestCase(TestCase):
     """Testing the company edit view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
         CompanyFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.company = Company.objects.first()
 
     def test_company_edit_page(self):
@@ -99,6 +122,13 @@ class CompanyEditViewTestCase(TestCase):
 
 class CompanyContactsViewTestCase(TestCase):
     """Testing the company contacts view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_company_contacts_page(self):
         response = self.client.get(reverse('company:contacts'))
         self.assertEqual(response.status_code, 200)
@@ -107,6 +137,13 @@ class CompanyContactsViewTestCase(TestCase):
 
 class CompanyPhoneListViewTestCase(TestCase):
     """Testing the company phone list view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_phone_list_is_empty(self):
         response = self.client.get(reverse('company:phone_list'))
         self.assertEqual(response.status_code, 200)
@@ -126,6 +163,13 @@ class CompanyPhoneListViewTestCase(TestCase):
 
 class CompanyPhoneCreateViewTestCase(TestCase):
     """Testing the company phone create view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_phone_create_page(self):
         response = self.client.get(reverse('company:phone_add'))
         self.assertEqual(response.status_code, 200)
@@ -145,9 +189,11 @@ class CompanyPhoneEditViewTestCase(TestCase):
     """Testing the company phone edit view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
         PhoneFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.phone = Phone.objects.first()
 
     def test_phone_edit_page(self):
@@ -171,10 +217,13 @@ class CompanyPhoneDeleteViewTestCase(TestCase):
     """Testing the company phone delete view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
         for _ in range(3):
             PhoneFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.phone = Phone.objects.last()
 
     def test_phone_confirm_delete(self):
@@ -191,6 +240,13 @@ class CompanyPhoneDeleteViewTestCase(TestCase):
 
 class CompanyEmailListViewTestCase(TestCase):
     """Testing the company email list view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_email_list_is_empty(self):
         response = self.client.get(reverse('company:email_list'))
         self.assertEqual(response.status_code, 200)
@@ -210,6 +266,13 @@ class CompanyEmailListViewTestCase(TestCase):
 
 class CompanyEmailCreateViewTestCase(TestCase):
     """Testing the company email create view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_email_create_page(self):
         response = self.client.get(reverse('company:email_add'))
         self.assertEqual(response.status_code, 200)
@@ -229,9 +292,11 @@ class CompanyEmailEditViewTestCase(TestCase):
     """Testing the company email edit view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
         EmailFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.email = Email.objects.first()
 
     def test_email_edit_page(self):
@@ -255,10 +320,13 @@ class CompanyEmailDeleteViewTestCase(TestCase):
     """Testing the company email delete view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
         for _ in range(3):
             EmailFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.email = Email.objects.last()
 
     def test_email_confirm_delete(self):

@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
@@ -5,8 +6,18 @@ from projects.models import Project
 from projects.tests.factories import ProjectFactory
 
 
+UserModel = get_user_model()
+
+
 class ProjectListViewTestCase(TestCase):
     """Testing the project list view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_no_projects(self):
         response = self.client.get(reverse('project:list'))
         self.assertEqual(response.status_code, 200)
@@ -28,10 +39,13 @@ class ProjectDetailViewTestCase(TestCase):
     """Testing the project detail view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
         for _ in range(3):
             ProjectFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.project_list = Project.objects.all()
 
     def test_project_not_found(self):
@@ -51,6 +65,13 @@ class ProjectDetailViewTestCase(TestCase):
 
 class ProjectCreateViewTestCase(TestCase):
     """Testing the project create view."""
+    @classmethod
+    def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
+    def setUp(self):
+        self.client.login(username='Tester', password='test_password')
+
     def test_project_create_page(self):
         response = self.client.get(reverse('project:create'))
         self.assertEqual(response.status_code, 200)
@@ -76,9 +97,11 @@ class ProjectEditViewTestCase(TestCase):
     """Testing the project edit view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
         ProjectFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.project = Project.objects.first()
 
     def test_project_edit_page(self):
@@ -107,10 +130,13 @@ class ProjectDeleteViewTestCase(TestCase):
     """Testing the project delete view."""
     @classmethod
     def setUpTestData(cls):
+        UserModel.objects.create_user(username='Tester', password='test_password')
+
         for _ in range(3):
             ProjectFactory()
 
     def setUp(self):
+        self.client.login(username='Tester', password='test_password')
         self.project = Project.objects.last()
 
     def test_project_confirm_delete(self):
