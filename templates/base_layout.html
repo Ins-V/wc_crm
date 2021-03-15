@@ -46,6 +46,12 @@
             <li><a href="{% url 'project:create' %}">Новый проект</a></li>
         </ul>
 
+        <ul id="dropdown-messages-menu" class="dropdown-content">
+            <li><a href="{% url 'interaction:list' %}">Список сообщений</a></li>
+            <li><a href="{% url 'interaction:create' %}">Новый сообщение</a></li>
+            <li><a href="{% url 'interaction:keyword_list' %}">Ключевые слова</a></li>
+        </ul>
+
         <ul id="dropdown-user-menu" class="dropdown-content">
             <li><a href="{% url 'account:detail' %}">Мой аккаунт</a></li>
             <li><a href="{% url 'account:settings' %}">Настройки</a></li>
@@ -69,6 +75,11 @@
                         <li>
                             <a class="dropdown-trigger" href="#" data-target="dropdown-project-menu">
                                 Проекты <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-trigger" href="#" data-target="dropdown-messages-menu">
+                                Сообщения <i class="material-icons right">arrow_drop_down</i>
                             </a>
                         </li>
                         <li>
@@ -112,6 +123,19 @@
                         <ul>
                             <li><a href="{% url 'project:list' %}">Список проектов</a></li>
                             <li><a href="{% url 'project:create' %}">Новый проект</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>Сообщения</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{% url 'interaction:list' %}">Список сообщений</a></li>
+                            <li><a href="{% url 'interaction:create' %}">Новый сообщение</a></li>
                         </ul>
                     </div>
                 </li>

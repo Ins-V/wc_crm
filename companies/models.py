@@ -17,7 +17,7 @@ class Phone(models.Model):
         verbose_name="номер",
         max_length=15,
         unique=True,
-        validators=[PhoneValidator]
+        validators=[PhoneValidator()]
     )
 
     def __str__(self):

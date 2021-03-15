@@ -20,7 +20,6 @@ class InteractionFactory(factory.django.DjangoModelFactory):
         model = Interaction
 
     project = factory.SubFactory('projects.tests.factories.ProjectFactory')
-    company = factory.SubFactory('companies.tests.factories.CompanyFactory')
     channel = factory.Faker(
         'random_element', elements=[x[0] for x in Interaction.CHANNEL_CHOICES]
     )

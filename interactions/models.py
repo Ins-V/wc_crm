@@ -38,7 +38,6 @@ class Interaction(models.Model):
     )
 
     project = models.ForeignKey(Project, verbose_name="проект", on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, verbose_name="компания", on_delete=models.CASCADE)
     channel = models.PositiveSmallIntegerField(
         verbose_name="канал обращения",
         choices=CHANNEL_CHOICES,
@@ -56,7 +55,7 @@ class Interaction(models.Model):
     keywords = models.ManyToManyField(Keyword, verbose_name="ключевые слова", blank=True)
 
     def __str__(self):
-        return f"Взаимодействие с компанией {self.company.name} #{self.pk}"
+        return f"Взаимодействие с компанией {self.project.company.name} #{self.pk}"
 
     def get_absolute_url(self):
         return reverse('interaction:detail', kwargs={'pk': self.pk})
