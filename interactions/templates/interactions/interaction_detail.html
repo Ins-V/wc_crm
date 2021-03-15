@@ -12,7 +12,7 @@
                     {{ interaction.description }}
                     {% endautoescape %}
                 </div>
-                <p><b>Компания:</b> {{ interaction.company }}</p>
+                <p><b>Компания:</b> {{ interaction.project.company }}</p>
                 <p><b>Проект:</b> {{ interaction.project }}</p>
                 <p><b>Канал обращения:</b> {{ interaction.get_channel_display }}</p>
                 <p><b>Дата создания записи:</b> <i>{{ interaction.created }}</i></p>

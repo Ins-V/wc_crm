@@ -20,7 +20,7 @@ class LoginRequiredMiddleware:
         if getattr(view_func, 'login_exempt', False):
             return None
 
-        if reverse_lazy('admin:login') == request.path:
+        if reverse_lazy('admin:index') == request.path or reverse_lazy('admin:login') == request.path:
             return None
 
         login_url = reverse_lazy('account:login')

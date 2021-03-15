@@ -23,21 +23,25 @@ class LogoutView(views.LogoutView):
     next_page = reverse_lazy('account:login')
 
 
+@method_decorator(login_exempt, name='dispatch')
 class PasswordResetView(views.PasswordResetView):
     template_name = 'accounts/password_reset_form.html'
     success_url = reverse_lazy('account:password_reset_done')
     email_template_name = 'accounts/password_reset_email.html'
 
 
+@method_decorator(login_exempt, name='dispatch')
 class PasswordResetDoneView(views.PasswordResetDoneView):
     template_name = 'accounts/password_reset_done.html'
 
 
+@method_decorator(login_exempt, name='dispatch')
 class PasswordResetConfirmView(views.PasswordResetConfirmView):
     template_name = 'accounts/password_reset_confirm.html'
     success_url = reverse_lazy('account:password_reset_complete')
 
 
+@method_decorator(login_exempt, name='dispatch')
 class PasswordResetCompleteView(views.PasswordResetCompleteView):
     template_name = 'accounts/password_reset_complete.html'
 

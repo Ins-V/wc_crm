@@ -62,7 +62,7 @@
             {% for interaction in interaction_list %}
                 <tr>
                     <td>{{ forloop.counter }}</td>
-                    <td>{{ interaction.company }}</td>
+                    <td>{{ interaction.project.company }}</td>
                     <td>{{ interaction.project }}</td>
                     <td class="center-align">{{ interaction.manager }}</td>
                     <td class="center-align">{{ interaction.created }}</td>
