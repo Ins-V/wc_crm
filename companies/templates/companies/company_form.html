@@ -22,17 +22,7 @@
                 {% if field.errors %}
                     {% for error in field.errors %}<p class="red-text">* {{ error }}</p>{% endfor %}
                 {% endif %}
-                <p>
-                    {{ field.label_tag }} {{ field }}
-                    {% if field.name == 'phones' %}
-                        <a href="{% url 'company:phone_add' %}"
-                           target="_blank">Добавить новый номер телефона</a>
-                    {% endif %}
-                    {% if field.name == 'emails' %}
-                        <a href="{% url 'company:email_add' %}"
-                           target="_blank">Добавить новый адрес электронной почты</a>
-                    {% endif %}
-                </p>
+                <p>{{ field.label_tag }} {{ field }}</p>
             {% endfor %}
             <div class="center-align">
                 <button type="submit" class="waves-effect waves-light btn">
