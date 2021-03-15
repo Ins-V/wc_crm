@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% block title %}WC_CRM{% endblock %}</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <style>
+        #login-form .card-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #login-form a { margin: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar-fixed">
+        <nav>
+            <div class="nav-wrapper cyan darken-4">
+                <a href="{% url 'account:login' %}" class="brand-logo center">{ WC_CRM }</a>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

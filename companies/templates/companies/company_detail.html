@@ -1,0 +1,62 @@
+{% extends 'base_layout.html' %}
+
+{% block title %}{{ company.name }} &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <header>
+            <h3 class="center-align">{{ company.name }}</h3>
+        </header>
+
+        {% autoescape off %}
+        {{ company.description }}
+        {% endautoescape %}
+        <p><b>Адрес:</b> {{ company.address }}</p>
+        <p><b>Руководитель или контактное лицо:</b> {{ company.contact_person }}</p>
+
+        {% if company.phones.count or company.emails.count %}
+            <ul class="collapsible z-depth-0">
+                {% if company.phones.count %}
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons light-blue-text text-darken-1">phone</i> Контактные телефоны
+                        </div>
+                        <div class="collapsible-body">
+                            {% for phone in company.phones.all %}
+                                <div>
+                                    <a href="tel:{{ phone.number }}">{{ phone.number }}</a> ({{ phone.owner }})
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endif %}
+                {% if company.emails.count %}
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="material-icons light-blue-text text-darken-1">mail</i> Адреса электронной почты
+                        </div>
+                        <div class="collapsible-body">
+                            {% for email in company.emails.all %}
+                                <div>
+                                    <a href="mailto:{{ email.address }}">{{ email.address }}</a> ({{ email.owner }})
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endif %}
+
+        <p><b>Дата создания записи:</b> <i>{{ company.created }}</i></p>
+        <p><b>Дата обновления записи:</b> <i>{{ company.updated }}</i></p>
+        <p>
+            <a href="{% url 'interaction:list' %}?company={{ company.pk }}">
+                Сообщения связанные с компанией
+            </a>
+        </p>
+
+        <a href="{% url 'company:edit' company.pk %}" class="waves-effect waves-light btn">
+            <i class="material-icons left">edit</i> Редактировать
+        </a>
+    </div>
+{% endblock %}

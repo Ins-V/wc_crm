@@ -1,0 +1,52 @@
+{% extends 'base_layout.html' %}
+{% load paginator %}
+
+{% block title %}Список компаний &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <h3 class="center-align">Список компаний</h3>
+
+    <form action="" method="get">
+        <div class="input-field">
+            <select name="sort" id="id_sort">
+                <option value="name"{% if sort == 'name' %} selected{% endif %}>По названию</option>
+                <option value="-name"{% if sort == '-name' %} selected{% endif %}>По названию (в обратном порядке)</option>
+                <option value="created"{% if sort == 'created' %} selected{% endif %}>По дате создания</option>
+                <option value="-created"{% if sort == '-created' %} selected{% endif %}>По дате создания (в обратном порядке)</option>
+            </select>
+            <label for="id_sort">Сортировать:</label>
+        </div>
+    </form>
+
+    {% for company in company_list %}
+        <div class="card">
+            <div class="card-content">
+                <p class="card-title">
+                    <a href="{% url 'company:detail' company.pk %}">{{ company.name }}</a>
+                </p>
+
+                <div class="description-block">
+                    {% autoescape off %}
+                    {{ company.description }}
+                    {% endautoescape %}
+                </div>
+
+                <p><b>Дата создания записи:</b> <i>{{ company.created }}</i></p>
+                <p><b>Дата обновления записи:</b> <i>{{ company.updated }}</i></p>
+            </div>
+            <div class="card-action right-align">
+                <a href="{% url 'company:edit' company.pk %}" class="waves-effect waves-light btn">
+                    <i class="material-icons left">edit</i> Редактировать
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="card">
+            <div class="card-content">
+                <p>Список компаний пуст.</p>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% pagination %}
+{% endblock %}

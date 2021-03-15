@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>{% block title %}WC_CRM{% endblock %}</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        strong { font-weight: bold; }
+        .card-title a { font-weight: 500; }
+        .description-block { margin-bottom: .5rem; }
+        #login-form .card-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #login-form a { margin: 0; }
+        .sidenav .collapsible-header { padding: 0 32px; }
+        .avatar {
+            height: 64px;
+            display: inline-flex;
+            align-items: center;
+        }
+        .avatar img { height: 3.5rem; }
+        .avatar i { font-size: 3.5rem !important; }
+        .evaluation { white-space: nowrap; }
+        .evaluation.widget i { cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <div class="navbar-fixed">
+        <ul id="dropdown-company-menu" class="dropdown-content">
+            <li><a href="{% url 'company:list' %}">Список компаний</a></li>
+            <li><a href="{% url 'company:create' %}">Новая компания</a></li>
+            <li><a href="{% url 'company:contacts' %}">Контакты</a></li>
+        </ul>
+
+        <ul id="dropdown-project-menu" class="dropdown-content">
+            <li><a href="{% url 'project:list' %}">Список проектов</a></li>
+            <li><a href="{% url 'project:create' %}">Новый проект</a></li>
+        </ul>
+
+        <ul id="dropdown-user-menu" class="dropdown-content">
+            <li><a href="{% url 'account:detail' %}">Мой аккаунт</a></li>
+            <li><a href="{% url 'account:settings' %}">Настройки</a></li>
+            <li><a href="{% url 'account:password_change' %}">Изменить пароль</a></li>
+            <li><a href="{% url 'account:logout' %}">Выйти</a></li>
+        </ul>
+
+        <nav>
+            <div class="nav-wrapper cyan darken-4">
+                <div class="container">
+                    <a href="{% url 'company:list' %}" class="brand-logo">{ WC_CRM }</a>
+                    <a href="#" data-target="mobile-navbar" class="sidenav-trigger">
+                        <i class="material-icons">menu</i>
+                    </a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li>
+                            <a class="dropdown-trigger" href="#" data-target="dropdown-company-menu">
+                                Компании <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-trigger" href="#" data-target="dropdown-project-menu">
+                                Проекты <i class="material-icons right">arrow_drop_down</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-trigger avatar" href="#" data-target="dropdown-user-menu">
+                                {% if user.photo %}
+                                    <img src="{{ user.photo.url }}"
+                                         alt="{{ user.username }}"
+                                         class="circle">
+                                {% else %}
+                                    <i class="material-icons">account_circle</i>
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <ul class="sidenav" id="mobile-navbar">
+        <li>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>Компании</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{% url 'company:list' %}">Список компаний</a></li>
+                            <li><a href="{% url 'company:create' %}">Новая компания</a></li>
+                            <li><a href="{% url 'company:contacts' %}">Контакты</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="divider"></li>
+        <li>
+            <ul class="collapsible">
+                <li>
+                    <div class="collapsible-header"><i class="material-icons">arrow_drop_down</i>Проекты</div>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li><a href="{% url 'project:list' %}">Список проектов</a></li>
+                            <li><a href="{% url 'project:create' %}">Новый проект</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li class="divider"></li>
+        <li><a href="{% url 'account:detail' %}"><i class="material-icons">account_box</i>Мой аккаунт</a></li>
+        <li><a href="{% url 'account:settings' %}"><i class="material-icons">settings_applications</i>Настройки</a></li>
+        <li><a href="{% url 'account:password_change' %}"><i class="material-icons">vpn_key</i>Изменить пароль</a></li>
+        <li><a href="{% url 'account:logout' %}"><i class="material-icons">exit_to_app</i>Выйти</a></li>
+    </ul>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            M.Sidenav.init(document.querySelectorAll('.sidenav'));
+            M.Dropdown.init(
+                document.querySelectorAll('.dropdown-trigger'),
+                { constrainWidth: false, coverTrigger: false }
+            );
+            M.Collapsible.init(document.querySelectorAll('.collapsible'));
+            M.FormSelect.init(document.querySelectorAll('select'));
+            M.Modal.init(document.querySelectorAll('.modal'));
+            M.Tooltip.init(document.querySelectorAll('.tooltipped'));
+            M.Datepicker.init(document.querySelectorAll('.datepicker'), {
+                format: 'dd.mm.yyyy',
+                i18n: {
+                    cancel: 'Отмена',
+                    months: [
+                        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+                    ],
+                    monthsShort: [
+                        'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
+                        'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'
+                    ],
+                    weekdays: ['Воскресень', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'],
+                    weekdaysShort: ['Вск', 'Пнд', 'Втр', 'Срд', 'Чтв', 'Птн', 'Сбт'],
+                    weekdaysAbbrev: ['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
+                }
+            });
+
+            const sortList = document.querySelector('#id_sort');
+
+            if (sortList) {
+                sortList.addEventListener('change', function () {
+                    this.form.submit();
+                });
+            }
+
+            document.querySelectorAll('.disabled a, .active a').forEach(function (elem) {
+                elem.addEventListener('click', function (e) {
+                    e.preventDefault();
+                });
+            });
+
+            document.querySelectorAll('.evaluation.widget').forEach(function (elem) {
+                elem.querySelectorAll('i').forEach(function (star) {
+                    star.addEventListener('mouseover', function () {
+                        this.classList.add('text-darken-4');
+                    });
+
+                    star.addEventListener('mouseout', function () {
+                        this.classList.remove('text-darken-4');
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

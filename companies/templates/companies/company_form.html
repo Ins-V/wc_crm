@@ -1,0 +1,36 @@
+{% extends 'base_layout.html' %}
+
+{% block title %}{{ company.name }} &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <header>
+            <h3 class="center-align">{% block page_header %}{{ company.name }}{% endblock %}</h3>
+        </header>
+
+        {% if form.non_field_errors %}
+            <div class="card-panel red lighten-1 white-text">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form action="" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.errors %}
+                    {% for error in field.errors %}<p class="red-text">* {{ error }}</p>{% endfor %}
+                {% endif %}
+                <p>{{ field.label_tag }} {{ field }}</p>
+            {% endfor %}
+            <div class="center-align">
+                <button type="submit" class="waves-effect waves-light btn">
+                    <i class="material-icons left">edit</i> Сохранить
+                </button>
+            </div>
+        </form>
+    </div>
+
+    {{ form.media }}
+{% endblock %}

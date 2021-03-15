@@ -1,0 +1,32 @@
+{% extends 'base_layout.html' %}
+{% load evaluations %}
+
+{% block title %}{{ interaction }} &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="card">
+            <div class="card-content">
+                <div class="description-block">
+                    {% autoescape off %}
+                    {{ interaction.description }}
+                    {% endautoescape %}
+                </div>
+                <p><b>Компания:</b> {{ interaction.company }}</p>
+                <p><b>Проект:</b> {{ interaction.project }}</p>
+                <p><b>Канал обращения:</b> {{ interaction.get_channel_display }}</p>
+                <p><b>Дата создания записи:</b> <i>{{ interaction.created }}</i></p>
+                <p><b>Дата обновления записи:</b> <i>{{ interaction.updated }}</i></p>
+                <hr>
+                {% evaluation_star interaction.evaluation %}
+            </div>
+
+            <div class="card-action right-align">
+                <a href="{% url 'interaction:edit' interaction.pk %}"
+                   class="waves-effect waves-light btn">
+                    <i class="material-icons left">edit</i> Редактировать
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

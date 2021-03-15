@@ -1,0 +1,31 @@
+{% extends 'base_layout.html' %}
+
+{% block title %}Удалить проект &bull; {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <header>
+            <h3 class="center-align">Подтверждение удаления</h3>
+        </header>
+
+        <div class="card">
+            <div class="card-content">
+                <p class="card-title">
+                    Вы действительно желаете удалить проект {{ project.name }}?
+                </p>
+                <p>После удаления данные будут потеряны безвозвратно!</p>
+            </div>
+            <div class="card-action right-align">
+                <form action="" method="post">{% csrf_token %}
+                    <button type="submit" class="waves-effect waves-light btn red darken-1">
+                        <i class="material-icons left">delete</i> Да, удалить
+                    </button>
+
+                    <a href="{% url 'project:list' %}" class="waves-effect waves-light btn">
+                        <i class="material-icons left">cancel</i> Нет, отменить
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
