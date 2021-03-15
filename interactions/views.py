@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy
 from django.views import generic
 
-from interactions.models import Interaction
-from interactions.forms import InteractionForm, KeywordFilterForm
+from interactions.models import Interaction, Keyword
+from interactions.forms import InteractionForm, KeywordForm, KeywordFilterForm
 from companies.models import Company
 from projects.models import Project
 
@@ -28,7 +29,7 @@ class InteractionListView(generic.ListView):
 
         if url_params.get('company'):
             self.company = get_object_or_404(Company, pk=url_params.get('company'))
-            return qs.filter(company=self.company)
+            return qs.filter(project__company=self.company)
         elif url_params.get('project'):
             self.project = get_object_or_404(Project, pk=url_params.get('project'))
             return qs.filter(project=self.project)
@@ -72,3 +73,40 @@ class AccountInteractionListView(generic.ListView):
 
     def get_queryset(self):
         return self.model.objects.filter(manager=self.request.user)
+
+
+class KeywordListView(generic.ListView):
+    """Keyword list view."""
+    model = Keyword
+    ordering = ['word']
+    paginate_by = 10
+
+
+class KeywordCreateView(generic.CreateView):
+    """Keyword create view."""
+    model = Keyword
+    form_class = KeywordForm
+    success_url = reverse_lazy('interaction:keyword_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_header'] = "Добавить новое ключевое слово"
+        return context
+
+
+class KeywordEditView(generic.UpdateView):
+    """Keyword edit view."""
+    model = Keyword
+    form_class = KeywordForm
+    success_url = reverse_lazy('interaction:keyword_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_header'] = "Изменить ключевое слово"
+        return context
+
+
+class KeywordDeleteView(generic.DeleteView):
+    """Keyword delete view."""
+    model = Keyword
+    success_url = reverse_lazy('interaction:keyword_list')

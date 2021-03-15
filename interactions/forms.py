@@ -12,6 +12,13 @@ class InteractionForm(forms.ModelForm):
         widgets = {'evaluation': SelectAsStarsWidget}
 
 
+class KeywordForm(forms.ModelForm):
+    """Form for create and edit keywords."""
+    class Meta:
+        model = Keyword
+        fields = '__all__'
+
+
 class KeywordFilterForm(forms.Form):
     """Form for filtering interactions by keywords."""
     keyword = forms.MultipleChoiceField(

@@ -41,9 +41,9 @@ class InteractionListViewTestCase(TestCase):
         company_2 = CompanyFactory()
 
         for _ in range(2):
-            InteractionFactory(company=company_1)
+            InteractionFactory(project=ProjectFactory(company=company_1))
 
-        InteractionFactory(company=company_2)
+        InteractionFactory(project=ProjectFactory(company=company_2))
 
         response = self.client.get(f"{reverse('interaction:list')}?company={company_1.pk}")
         self.assertEqual(response.status_code, 200)
@@ -122,7 +122,6 @@ class InteractionEditViewTestCase(TestCase):
     def test_update_interaction(self):
         interaction_update = {
             'project': self.interaction.project.pk,
-            'company': self.interaction.company.pk,
             'channel': self.interaction.channel,
             'manager': self.interaction.manager.pk,
             'description': self.interaction.description,
@@ -153,7 +152,6 @@ class InteractionCreateViewTestCase(TestCase):
         interaction = InteractionFactory()
         new_interaction_data = {
             'project': interaction.project.pk,
-            'company': interaction.company.pk,
             'channel': interaction.channel,
             'manager': interaction.manager.pk,
             'description': interaction.description,
